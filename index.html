@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Beach</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+  cursor:none;
+}
+
+body{
+  font-family:'Cormorant Garamond', serif;
+  background:#f82bc8;
+  color:#a1cdfc;
+  overflow-x:hidden;
+  transition:0.6s ease;
+}
+
+body.light{
+  background:#b5059b;
+  color:rgba(255, 255, 255, 0.897);
+}
+
+/* CUSTOM CURSOR */
+.cursor{
+  position:fixed;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(45deg,#ff00cc,#3333ff);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  z-index:9999;
+  box-shadow:0 0 15px rgba(255,0,200,0.8);
+}
+
+body.light .cursor{
+  border:1px solid black;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  height:300vh;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("img/heee.jpeg") center/cover no-repeat;
+  animation:slowZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+
+/* SPLIT SECTION */
+.split-section{
+  display:flex;
+  min-height:100vh;
+}
+
+.split-img{
+  flex:1;
+  min-height:100vh;
+  background-image:url("img/heee.jpeg");
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.split-text{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:80px;
+  background:#f82bc8;
+}
+
+.split-text h2{
+  font-size:2.5rem;
+  margin-bottom:20px;
+}
+
+.split-text p{
+  font-size:1.2rem;
+  line-height:1.8;
+}
+
+/* SECTION GLASS */
+.section{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:120px 40px;
+  clip-path:polygon(0 5%, 100% 0, 100% 95%,0 100%);
+}
+
+.bg-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(9,152,205,0.4), rgba(0,0,0,0.8)),
+    url("img/saa.jpeg") center/cover no-repeat;
+  z-index:-1;
+}
+
+
+.cinematic::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.7),rgba(0,0,0,0.3));
+}
+
+.cinematic{
+  position:relative;
+}
+
+.glass{
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:40px;
+  border-radius:20px;
+  max-width:600px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* GALLERY */
+.photo-side{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.photo-side .img-box{
+  aspect-ratio: 1/1;
+}
+
+.img-box{
+  overflow:hidden;
+  border-radius:15px;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.8s ease;
+  box-shadow:0 0 20px rgba(255,0,200,0.15);
+  position:relative;
+}
+
+.img-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,
+    rgba(0,0,0,0.4),
+    rgba(255,0,200,0.15),
+    rgba(0,200,255,0.15));
+  opacity:0;
+  transition:0.6s ease;
+}
+
+.img-box:hover::before{
+  opacity:1;
+}
+
+.img-box::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,
+    transparent,
+    rgba(255,0,200,0.3),
+    rgba(0,200,255,0.3),
+    transparent);
+  transition:0.8s;
+}
+
+.img-box:hover::after{
+  left:100%;
+}
+
+.img-box.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.img-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:1s ease;
+}
+
+.img-box:hover img{
+  transform:scale(1.1);
+}
+
+.controls{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:1000;
+  display:flex;
+  gap:15px;
+}
+
+.controls button{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  color:white;
+  padding:8px 15px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.controls button:hover{
+  transform:scale(1.05);
+}
+
+/* LIGHTBOX */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:0.4s ease;
+}
+
+.lightbox.show-lightbox{
+  opacity:1;
+  visibility:visible;
+}
+
+.lightbox img{
+  max-width:90%;
+  max-height:90%;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .split-section{
+    flex-direction:column;
+  }
+
+  .cinematic h2{
+    font-size:2rem;
+  }
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  opacity:0.5;
+}
+
+.hero-content h1{
+  font-size:5rem;
+  letter-spacing:2px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.7);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+  <button id="modeToggle">Color Swap</button>
+  <button id="musicToggle">Music</button>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="music/8.mp4" type="audio/mpeg">
+</audio>
+
+<div class="cursor"></div>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>between the horizon and the silence</h1>
+  </div>
+</div>
+
+<div class="section bg-section">
+  <div class="glass">
+    <h2>the ocean keeps its secrets.</h2>
+    <p>some sunsets feel like they were meant to stay.</p>
+  </div>
+</div>
+
+<div class="split-section">
+  <div class="split-img"></div>
+  <div class="split-text">
+    <h2>where silence speaks</h2>
+    <p>
+      sometimes the quiet carries more weight than words ever could.
+      the ocean remembers everything.
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="photo-side">
+    <div class="img-box"><img src="img/sarah.jpeg"></div>
+    <div class="img-box"><img src="img/heee.jpeg"></div>
+    <div class="img-box"><img src="img/sarr.jpeg"></div>
+    <div class="img-box"><img src="img/saa.jpeg"></div>
+  </div>
+</div>
+
+<footer>crafted in stillness</footer>
+
+<div class="lightbox" id="lightbox">
+  <img src="" id="lightbox-img">
+</div>
+
+<script>
+const cursor = document.querySelector(".cursor");
+document.addEventListener("mousemove", e=>{
+  cursor.style.left = e.clientX+"px";
+  cursor.style.top = e.clientY+"px";
+});
+
+const glass = document.querySelector(".glass");
+const galleryItems = document.querySelectorAll(".img-box");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+window.addEventListener("scroll", () => {
+  const trigger = window.innerHeight * 0.85;
+  if(glass && glass.getBoundingClientRect().top < trigger){
+    glass.classList.add("show");
+  }
+  galleryItems.forEach((item,index)=>{
+    if(item.getBoundingClientRect().top < trigger){
+      setTimeout(()=> item.classList.add("show"), index*150);
+    }
+  });
+});
+
+galleryItems.forEach(item=>{
+  item.addEventListener("click", ()=>{
+    lightboxImg.src = item.querySelector("img").src;
+    lightbox.classList.add("show-lightbox");
+  });
+});
+
+lightbox.addEventListener("click", ()=>{
+  lightbox.classList.remove("show-lightbox");
+});
+
+const modeToggle = document.getElementById("modeToggle");
+modeToggle.addEventListener("click", ()=>{
+  document.body.classList.toggle("light");
+});
+
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+musicToggle.addEventListener("click", ()=>{
+  if(music.paused){
+    music.play();
+  } else{
+    music.pause();
+  }
+});
+
+window.addEventListener("scroll", function(){
+  const el = document.querySelector(".split-img");
+  if(!el) return;
+
+  const rect = el.getBoundingClientRect();
+  const offset = rect.top * 0.3;
+
+  el.style.backgroundPosition = "center " + offset + "px";
+});
+</script>
+
+</body>
+</html>
