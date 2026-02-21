@@ -308,6 +308,60 @@ footer{
   text-shadow:0 10px 40px rgba(0,0,0,0.7);
 }
 
+@media (max-width: 768px){
+
+  /* HERO */
+  .hero-content h1{
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+
+  .hero-content p{
+    font-size: 0.9rem;
+  }
+
+  /* SECTION GENERAL */
+  .section{
+    padding: 80px 20px;
+    clip-path: none; /* kalau pakai clip-path miring, matiin di HP */
+  }
+
+  /* SPLIT SECTION */
+  .split-section{
+    flex-direction: column;
+  }
+
+  .split-img{
+    min-height: 60vh;
+  }
+
+  .split-text{
+    padding: 40px 20px;
+  }
+
+  /* GALLERY */
+  .photo-side{
+    grid-template-columns: 1fr;
+  }
+
+  .photo-side .img-box{
+    aspect-ratio: 1/1;
+  }
+
+  /* BUTTON CONTROLS */
+  .controls{
+    top: 10px;
+    right: 10px;
+    gap: 8px;
+  }
+
+  .controls button{
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+
+}
+
 </style>
 </head>
 
